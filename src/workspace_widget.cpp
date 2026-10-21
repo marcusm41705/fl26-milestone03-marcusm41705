@@ -25,51 +25,74 @@ WorkspaceWidget::WorkspaceWidget(QWidget* parent) : QWidget(parent) {
     button_layout->addWidget(add_document_button_);
     button_layout->addWidget(build_corpus_button_);
 
-    left_lay->addWidget(wp_label);
-    left_lay->addLayout(button_layout);
-    left_lay->addWidget(document_list_);
-    left_lay->addWidget(corpus_status_label_);
+    left_lay->addWidget(wp_label); //Workspace label
+    left_lay->addLayout(button_layout); //Button layout 
+    left_lay->addWidget(document_list_); //Document list
+    left_lay->addWidget(corpus_status_label_); //Label for corpus status 
 
     //Layout from right side: selected document
     auto* right = new QWidget(this);
-    auto right_lay = new QVBoxLayout(right)
-    
+    auto right_lay = new QVBoxLayout(right);
+    document_title_label_ = new QLabel("Selected Document -", right);
+    document_text_ = new QPlainTextEdit(right);
+    document_text_->setReadOnly(true);
+    document_text_->setPlaceholderText("Select the document to view it's contents.");
+    right_lay->addWidget(document_title_label_);
+    right_lay->addWidget(document_text_ );
+    //Put both sections together
+    main_lay->addWidget(left, 1);
+    main_lay->addWidget(right, 1);
+    //Initializing the button state
+    build_corpus_button_->setEnabled(false);
+    //Connecting the buttons to the component values
+    //connect document elements
+    connect(add_document_button_, &QPushButton::clicked,this,&WorkspaceWidget::add_document_requested);
+    //connect corpus elements
+    connect(build_corpus_button_, &QPushButton::clicked, this, &WorkspaceWidget::build_corpus_requested);
+    //connect document selection elements
+    connect(document_list_, &QListWidget::currentRowChanged, this, &WorkspaceWidget::document_selected);
 
 }
 
 void WorkspaceWidget::add_document(const QString& title) {
-    // TODO
-    (void)title;  // To suppress unused-parameter warning.
+    //Adds the document selected from the document list
+    document_list_->addItem(title);
 }
 
 void WorkspaceWidget::select_document(int row) {
-    // TODO
-    (void)row;  // To suppress unused-parameter warning.
+    //Sets the current row to the selected document from the parameter row
+    document_list_->setCurrentRow(row);
 }
 
 void WorkspaceWidget::show_selected_document(const QString& title,
                                               const QString& text) {
-    // TODO
-    (void)title;  // To suppress unused-parameter warning.
-    (void)text;  // To suppress unused-parameter warning.
+                                                //Show the title and text of the selected document
+    document_title_label_->setText(QString("Selected Document - %1").arg(title));
+    document_text_->setPlainText(text);
 }
 
 void WorkspaceWidget::clear_selected_document() {
-    // TODO
+    //Clear the text of the selected document
+    document_title_label_->setText("Selected Document -");
+    document_text_->clear();
 }
 
 void WorkspaceWidget::set_corpus_status(const QString& text) {
-    // TODO
-    (void)text;  // To suppress unused-parameter warning.
+    //update the text of the corpus status label
+    corpus_status_label_->setText(text);
 }
 
 void WorkspaceWidget::set_build_corpus_enabled(bool enabled) {
-    // TODO
-    (void)enabled;  // To suppress unused-parameter warning.
+    //enables the button used to build the corpus
+    build_corpus_button_->setEnabled(enabled);
 }
 
 void WorkspaceWidget::reset() {
-    // TODO
+    //resets the document list, selected document, corpus status, and corpus build enable 
+    document_list_->clear();
+    clear_selected_document();
+    set_corpus_status("Corpus: Not Built");
+    set_build_corpus_enabled(false);
 }
 
 }  // namespace aiws::gui
