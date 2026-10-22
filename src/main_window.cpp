@@ -117,6 +117,17 @@ void MainWindow::build_corpus() {
 void MainWindow::document_selected(int row) {
     //Grab documents stored in Workspace
     const auto& docs = workspace_.documents();
+    //Handling invalid selection
+    if( row < 0 || static_cast<std::size_t>(row) >= documents.size()){
+        workspace_widget_->clear_selected_document();
+        return;
+    }
+    //Retrieving selected document
+    const Document& document = documents[row];
+    //Converting string to Qstring for the display
+    QString title_qstring = QString::fromStdString(document.title());
+    QString text_qstring = QString::fromStdString(document.text());
+    workspace_widget_->show_selected_document(title, text);
 }
 
 void MainWindow::search_requested(const QString& query, int k) {
@@ -158,11 +169,17 @@ void MainWindow::exit_application() {
 }
 
 void MainWindow::update_action_states() {
-    // TODO
+    //The build corpus needs at least one doc
+    bool docs_have = !workspace_.documents().empty();
+    workspace_widget_->set_build_corpus_enabled(docs_have);
+    
 }
 
 void MainWindow::invalidate_corpus() {
-    // TODO
+    corpus_current_ = false;
+    workspace_widget_->set_corpus_status("Corpus: Not built");
+    clear_processing_outputs();
+    update_action_states();
 }
 
 void MainWindow::clear_processing_outputs() {

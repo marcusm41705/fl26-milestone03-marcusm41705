@@ -8,47 +8,88 @@ SearchResultModel::SearchResultModel(QObject* parent)
 }
 
 int SearchResultModel::rowCount(const QModelIndex& parent) const {
-    // TODO
-    (void)parent;  // To suppress unused-parameter warning.
-    return 0;
+    if(parent.isValid()){
+        return 0;
+    }
+    return static_cast<int>(results_.size());
 }
 
 int SearchResultModel::columnCount(const QModelIndex& parent) const {
-    // TODO
-    (void)parent;  // To suppress unused-parameter warning.
-    return 0;
+    if(parent.isValid()){
+        return 0;
+    }
+    return 5;
 }
 
 QVariant SearchResultModel::data(const QModelIndex& index, int role) const {
-    // TODO
-    (void)index;  // To suppress unused-parameter warning.
-    (void)role;  // To suppress unused-parameter warning.
-    return {};
+    if(!index.isValid() || role != Qt::DisplayRole){
+        return {};
+    }
+    const SearchResult* result = result_at(index.row());
+    if(result == nullptr){
+        return{};
+    }
+    switch(index.column()){
+        case 0:
+        return index.row() + 1;
+        //break;
+        case 1: 
+        return QString::fromStdString(result->document_id);
+        //break;
+        case 2: 
+        return QVariant::fromValue(static_cast<qulonglong>(result->chunk_sequence));
+        //break;
+        case 3:
+        return result->score;
+        //break;
+        case 4:
+        return QString::fromStdString(result->text);
+        //break;
+        default: return {};
+        //break;
+    }
 }
 
 QVariant SearchResultModel::headerData(int section,
                                        Qt::Orientation orientation,
                                        int role) const {
-    // TODO
-    (void)section;  // To suppress unused-parameter warning.
-    (void)orientation;  // To suppress unused-parameter warning.
-    (void)role;  // To suppress unused-parameter warning.
-    return {};
+    if(role != Qt::DisplayRole || orientation != Qt::Horizontal){
+        return{};
+    }
+    switch(section){
+        case 0:
+        return "Rank";
+        case 1:
+        return "Document";
+        case 2:
+        return "Chunk";
+        case 3:
+        return "Score";
+        case 4: 
+        return "Text";
+        default:
+        return {};
+    }
 }
 
 void SearchResultModel::set_results(std::vector<SearchResult> results) {
-    // TODO
-    (void)results;  // To suppress unused-parameter warning.
+    beginResetModel();
+    results_ = std::move(results);
+    endResetModel();
 }
 
 void SearchResultModel::clear() {
-    // TODO
+    beginResetModel();
+    results_.clear();
+    endResetModel();
 }
 
 const SearchResult* SearchResultModel::result_at(int row) const noexcept {
-    // TODO
-    (void)row;  // To suppress unused-parameter warning.
+    //Function retrieves result at specific row
+   if(row < 0 || static_cast<std::size_t>(row) >= results_.size()){
     return nullptr;
+   }
+   return &results_[static_cast<std::size_t>(row)];
 }
 
 }  // namespace aiws::gui
