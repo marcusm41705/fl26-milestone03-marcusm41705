@@ -392,6 +392,9 @@ CMakeFiles/ai_workspace_m3.dir/src/main_window.cpp.o: \
   /mnt/include/aiws/context_strategy.hpp \
   /mnt/include/aiws/retrieval_strategy.hpp \
   /mnt/include/aiws/corpus_index.hpp /mnt/include/aiws/workspace.hpp \
+  /mnt/include/aiws/gui/search_widget.hpp \
+  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QWidget \
+  /mnt/include/aiws/gui/resettable.hpp \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QLabel \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qlabel.h \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qframe.h \
@@ -399,7 +402,6 @@ CMakeFiles/ai_workspace_m3.dir/src/main_window.cpp.o: \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qiodevice.h \
   /usr/include/x86_64-linux-gnu/qt6/QtGui/qtextdocument.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qurl.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QWidget \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QPushButton \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qpushbutton.h \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qabstractbutton.h \

@@ -1,4 +1,5 @@
 #include "aiws/gui/main_window.hpp"
+#include "aiws/gui/search_widget.hpp"
 #include <QLabel>
 #include <QWidget>
 #include <QPushButton>

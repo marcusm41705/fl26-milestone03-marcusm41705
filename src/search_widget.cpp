@@ -43,7 +43,7 @@ SearchWidget::SearchWidget(QWidget* parent) : QWidget(parent) {
     //Search result table + model
     result_model_ = new SearchResultModel(this);
     results_view_ = new QTableView(this);
-    results_view_->setModel(result_model);
+    results_view_->setModel(result_model_);
     results_view_->setSelectionBehavior(QAbstractItemView::SelectRows);
     results_view_->setSelectionMode(QAbstractItemView::SingleSelection);
     results_view_->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -58,7 +58,7 @@ SearchWidget::SearchWidget(QWidget* parent) : QWidget(parent) {
     //View the source button
     view_source_button_ = new QPushButton("View Source", this);
     view_source_button_->setEnabled(false);
-    main_layout->addWidget(view_source_button_);
+    main_lay->addWidget(view_source_button_);
     //Signal + slot connections
     connect(query_edit_, &QLineEdit::textChanged, this, &SearchWidget::query_changed);
     connect(search_button_, &QPushButton::clicked, this, &SearchWidget::request_search);
@@ -72,7 +72,7 @@ QString SearchWidget::query() const {
 
 int SearchWidget::result_count() const {
     
-    return result_count_spin->value();
+    return result_count_spin_->value();
 }
 
 bool SearchWidget::has_query() const {
@@ -88,27 +88,72 @@ void SearchWidget::set_results(std::vector<SearchResult> results) {
     //Replaces the models results
     result_model_->set_results(std::move(results));
     //Clear the result dependent state
-    
+    selected_result_text_->clear();
+    view_source_button_->setEnabled(false);
+     selected_chunk_changed(QString()); //emit 
 }
 
 void SearchWidget::clear_results() {
-    // TODO
+    results_view_->clearSelection();
+    result_model_->clear();
+    selected_result_text_->clear();
+    view_source_button_->setEnabled(false);
+    selected_chunk_changed(QString()); //emit
 }
 
 void SearchWidget::reset() {
-    // TODO
+    query_edit_->clear();
+    result_count_spin_->setValue(3);
+    clear_results();
+    set_search_enabled(false);
 }
 
 void SearchWidget::request_search() {
-    // TODO
+    if(!search_button_->isEnabled()  || !has_query()){
+        return;
+    }
+    search_requested(query(), result_count()); //emit
 }
 
 void SearchWidget::show_selected_result() {
-    // TODO
+    //Determines what row of the table is selected
+    const QModelIndexList select = results_view_->selectionModel()->selectedRows();
+    if(select.isEmpty()){ //if no valid selection
+        selected_result_text_->clear();
+        view_source_button_->setEnabled(false);
+        selected_chunk_changed(QString()); //emit
+        return;
+    }
+    int row = select.first().row();
+    const SearchResult* res = result_model_->result_at(row);
+    if(res == nullptr){
+        selected_result_text_->clear();
+        view_source_button_->setEnabled(false);
+        selected_chunk_changed(QString()); //emit
+        return;
+    }
+    QString details = QString("Document: %1\n" 
+    "Chunk: %2\n" "Score: %3\n" "Text:\n%4").arg(QString::fromStdString(res->document_id))
+    .arg(static_cast<qulonglong>(res->chunk_sequence))
+    .arg(res->score)
+    .arg(QString::fromStdString(res->text));
+    selected_result_text_->setPlainText(details);
+    view_source_button_->setEnabled(true); //valid selection will allow to view the source
+    //Notifies the inspector about selected chunk
+    selected_chunk_changed(QString::fromStdString(res->chunk_id)); //emit
 }
 
 void SearchWidget::request_source_document() {
-    // TODO
+   const QModelIndexList select = results_view_->selectionModel()->selectedRows();
+   if(select.isEmpty()){
+    return;
+   }
+   const SearchResult* res = result_model_->result_at(select.first().row());
+   if(res == nullptr){
+    return;
+   }
+    source_document_requested(QString::fromStdString(res->document_id));
+   
 }
 
 }  // namespace aiws::gui

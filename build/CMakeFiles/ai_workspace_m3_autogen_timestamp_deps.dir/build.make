@@ -67,8 +67,8 @@ include CMakeFiles/ai_workspace_m3_autogen_timestamp_deps.dir/compiler_depend.ma
 include CMakeFiles/ai_workspace_m3_autogen_timestamp_deps.dir/progress.make
 
 CMakeFiles/ai_workspace_m3_autogen_timestamp_deps: libaiws_m2.a
-CMakeFiles/ai_workspace_m3_autogen_timestamp_deps: /usr/lib/qt6/libexec/moc
 CMakeFiles/ai_workspace_m3_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt6Widgets.so.6.4.2
+CMakeFiles/ai_workspace_m3_autogen_timestamp_deps: /usr/lib/qt6/libexec/moc
 
 ai_workspace_m3_autogen_timestamp_deps: CMakeFiles/ai_workspace_m3_autogen_timestamp_deps
 ai_workspace_m3_autogen_timestamp_deps: CMakeFiles/ai_workspace_m3_autogen_timestamp_deps.dir/build.make
