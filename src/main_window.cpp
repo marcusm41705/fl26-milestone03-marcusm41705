@@ -21,9 +21,9 @@
 namespace aiws::gui {
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
-    // TODO: Construct the M3 application window, compose the GUI components,
-    // establish layouts/presentation, connect events, and establish initial state.
-    
+    //Serves as the central coordiation for the entire application, 
+    //it owns Workspace and ProcessingCore backend objects while connecting
+    //Gui components using the QT signals and slots. 
     setWindowTitle("AI Workspace");
     resize(900,900); //Setting up application window
     //Setting up widget and main Layout
@@ -274,6 +274,8 @@ void MainWindow::update_action_states() {
 }
 
 void MainWindow::invalidate_corpus() {
+    //Invalidates the existing corpus whenever the workspace changes as previous 
+    //results and stats might no longer match the current doc.
     corpus_current_ = false;
     workspace_widget_->set_corpus_status("Corpus: Not built");
     clear_processing_outputs();
