@@ -22,6 +22,7 @@ int SearchResultModel::columnCount(const QModelIndex& parent) const {
 }
 
 QVariant SearchResultModel::data(const QModelIndex& index, int role) const {
+    //Used when Qt requests individual cell values
     if(!index.isValid() || role != Qt::DisplayRole){
         return {};
     }
@@ -73,7 +74,8 @@ QVariant SearchResultModel::headerData(int section,
 }
 
 void SearchResultModel::set_results(std::vector<SearchResult> results) {
-    beginResetModel();
+//Notify the attached Qt views before and after the replacement of the model
+    //Ensures the results table will refresh correctly    beginResetModel();
     results_ = std::move(results);
     endResetModel();
 }

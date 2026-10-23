@@ -240,6 +240,7 @@ void MainWindow::term_inspection_requested(const QString& term,
 }
 
 void MainWindow::reset_application() {
+    //Resetting all major GUI components inside the interface
     //clearing backend workspace
     workspace_.clear();
     //Marking the existing corpus as invalid 

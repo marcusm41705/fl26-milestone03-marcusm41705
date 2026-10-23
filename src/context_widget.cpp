@@ -60,6 +60,9 @@ void ContextWidget::set_build_context_enabled(bool enabled) {
 }
 
 void ContextWidget::set_context(const std::vector<ContextItem>& items) {
+    //This function presents the context items as returned by the backend. 
+    //Values like token counts, truncation flagging, and scores are results
+    //from the backend, so the GUI does not recalculate / modify these. 
     QStringList context_blocks;
     //Formatting for each context item
     for (const ContextItem& item: items){
@@ -91,6 +94,9 @@ void ContextWidget::reset() {
 }
 
 void ContextWidget::request_context() {
+    //This function emits the selected token budget without 
+    // constructing the context. 
+
     //ensuring the action is enabled
     if(!build_context_button_->isEnabled()){
         return;

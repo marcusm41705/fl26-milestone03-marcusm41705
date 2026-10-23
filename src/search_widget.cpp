@@ -84,6 +84,8 @@ void SearchWidget::set_search_enabled(bool enabled) {
 }
 
 void SearchWidget::set_results(std::vector<SearchResult> results) {
+    //Notify the attached Qt views before and after the replacement of the model
+    //Ensures the results table will refresh correctly
     results_view_->clearSelection(); //Removes the previous selection
     //Replaces the models results
     result_model_->set_results(std::move(results));
@@ -109,6 +111,8 @@ void SearchWidget::reset() {
 }
 
 void SearchWidget::request_search() {
+    //Emits the user query and requested result count so 
+    // that Main Window can invoke the existing Processing Core backend.
     if(!search_button_->isEnabled()  || !has_query()){
         return;
     }
@@ -116,6 +120,8 @@ void SearchWidget::request_search() {
 }
 
 void SearchWidget::show_selected_result() {
+    //Function used to forward the selected chunk to Term Inspector Widget
+    //so that the TF is able to be calculated when requested. 
     //Determines what row of the table is selected
     const QModelIndexList select = results_view_->selectionModel()->selectedRows();
     if(select.isEmpty()){ //if no valid selection

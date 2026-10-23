@@ -48,6 +48,9 @@ void TermInspectorWidget::set_inspection_enabled(bool enabled) {
 }
 
 void TermInspectorWidget::set_selected_chunk(const QString& chunk_id) {
+    //Function used to detect change in the search result (selected) that would 
+    //invalidate the previous chunk's TF, and not the DF. 
+    //Only calculates new TF when Inspect button is clicked
    if(selected_chunk_id_ != chunk_id){
     selected_chunk_id_ = chunk_id;
     chunk_frequency_value_->setText("-"); //the older frequency no longer applies
