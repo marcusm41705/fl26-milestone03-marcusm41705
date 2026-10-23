@@ -395,6 +395,10 @@ CMakeFiles/ai_workspace_m3.dir/src/main_window.cpp.o: \
   /mnt/include/aiws/gui/search_widget.hpp \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QWidget \
   /mnt/include/aiws/gui/resettable.hpp \
+  /mnt/include/aiws/gui/workspace_widget.hpp \
+  /mnt/include/aiws/gui/term_inspector_widget.hpp \
+  /usr/include/x86_64-linux-gnu/qt6/QtCore/QString \
+  /mnt/include/aiws/gui/context_widget.hpp \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QLabel \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qlabel.h \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qframe.h \
@@ -456,4 +460,10 @@ CMakeFiles/ai_workspace_m3.dir/src/main_window.cpp.o: \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qdialog.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/QFileInfo \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QMessageBox \
-  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qmessagebox.h
+  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qmessagebox.h \
+  /usr/include/x86_64-linux-gnu/qt6/QtCore/QCoreApplication \
+  /usr/include/x86_64-linux-gnu/qt6/QtCore/qcoreapplication.h \
+  /usr/include/x86_64-linux-gnu/qt6/QtCore/qcoreevent.h \
+  /usr/include/x86_64-linux-gnu/qt6/QtCore/qeventloop.h \
+  /usr/include/x86_64-linux-gnu/qt6/QtCore/qnativeinterface.h \
+  /usr/include/x86_64-linux-gnu/qt6/QtCore/qcoreapplication_platform.h
